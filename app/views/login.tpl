@@ -4,7 +4,7 @@
     <form action="%base_url%user/login" method="post" name="auth_user">
         <div class="form-field">
             <label for="auth-login">Логин:</label>
-            <input type="text" name="login" id="auth-login" required>
+            <input type="text" name="login" id="auth-login" required placeholder="Именно логин, а не email">
         </div>
         <div class="form-field">
             <label for="auth-password">Пароль:</label>
