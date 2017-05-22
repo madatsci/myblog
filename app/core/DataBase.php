@@ -121,8 +121,6 @@ class DataBase
         $query = substr($query, 0, -1);
         $query .= ")";
 
-        MyLogger::lg($query);
-
         return $this->query($query);
     }
 
