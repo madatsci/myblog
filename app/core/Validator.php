@@ -47,6 +47,7 @@ class Validator
             return false;
         }
 
+        // логин не должен состоять только из цифр
         if (preg_match("/^\\d*$/", $login)) {
             return false;
         }

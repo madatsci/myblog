@@ -26,11 +26,17 @@ class UserModel extends Model
      */
     public function createUser($login, $email, $password)
     {
-        try {            
+        try {
+            $encoded = md5($password);
+            
+            if (!$this->validator->validLogin($login) || !$this->validator->validHash($encoded)) {
+                throw new \Exception('Invalid login on password hash');
+            }
+            
             $result = $this->db->insert($this->tableName, [
                 'login' => $login,
                 'email' => $email,
-                'password' => md5($password),
+                'password' => $encoded,
                 'reg_date' => date('Y-m-d H:i:s')
             ]);
 
