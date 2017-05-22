@@ -157,6 +157,11 @@ input:focus {
     margin: 8px 0;
 }
 
+.edit-links {
+    margin: 8px 0;
+    color: #C29B9B;
+}
+
 /* Footer */
 
 footer {

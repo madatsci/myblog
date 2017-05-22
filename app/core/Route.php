@@ -55,10 +55,19 @@ class Route
         $controllerFullName = '\\App\\Controllers\\' . $controllerName;
         $controller = new $controllerFullName();
 
-        // вызываем запрашиваемый метод контроллера, если существует
+        // вызываем запрашиваемый метод контроллера, если он существует,
+        // и передаем ему параметр, если он был получен из URL
         if (method_exists($controller, $actionName)) {
-            MyLogger::lg("Controller: $controllerFullName, action: $actionName", 'Matched route');
-            $controller->$actionName();
+            if (isset($uriParts[3])) {
+                MyLogger::lg(
+                    "Controller: $controllerFullName, action: $actionName with param {$uriParts[3]}",
+                    'Matched route'
+                );
+                $controller->$actionName($uriParts[3]);
+            } else {
+                MyLogger::lg("Controller: $controllerFullName, action: $actionName", 'Matched route');
+                $controller->$actionName();
+            }
         } else {
             MyLogger::lg("Method $actionName not found in $controllerFullName class", 'Method not found');
             self::error404();
@@ -67,9 +76,7 @@ class Route
 
     private static function error404()
     {
-        header('HTTP/1.1 404 Not Found');
-        header('Status: 404 Not Found');
-
-        echo '<h1>Page not found.</h1>';
+        $controller = new Controller();
+        $controller->page404();
     }
 }

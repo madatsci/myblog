@@ -86,6 +86,19 @@ class Controller
     }
 
     /**
+     * Выводит страницу ошибки 404
+     */
+    public function page404()
+    {
+        header('HTTP/1.1 404 Not Found');
+        header('Status: 404 Not Found');
+
+        // TODO: сделать шаблон страницы 404
+        echo '<h1>Page not found.</h1>';
+        exit;
+    }
+
+    /**
      * Возвращает шаблон пользовательской панели
      *
      * @return string

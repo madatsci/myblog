@@ -77,7 +77,7 @@ class DataBase
         } else {
             $query = "SELECT $fields FROM `$table_name` $order $limit";
         }
-
+        
         $result_set = $this->query($query);
 
         if (!$result_set) {
@@ -393,6 +393,31 @@ class DataBase
         }
 
         return true;
+    }
+
+    /**
+     * @param $query
+     * @return array|bool
+     */
+    public function customQuery($query)
+    {
+        $result_set = $this->query($query);
+
+        if (!$result_set) {
+            return false;
+        }
+
+        $i = 0;
+        $data = [];
+
+        while ($row = $result_set->fetch_assoc()) {
+            $data[$i] = $row;
+            $i++;
+        }
+
+        $result_set->close();
+
+        return $data;
     }
 
     /**

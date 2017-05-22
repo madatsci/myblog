@@ -28,10 +28,15 @@ class UserController extends Controller
     {
         if (!empty($_POST)) {
             $formData = array_map('htmlspecialchars', $_POST);
+            $formData = array_map('trim', $formData);
 
             if ($formData['password'] !== $formData['confirm_password']) {
                 $this->setFlash('error', 'Пароли не совпадают!');
             } else {
+                if ($this->model->checkLogin($formData['login'])) {
+                    $this->setFlash('error', 'Пользователь с таким логином уже существует!');
+                    $this->redirectBack();
+                }
                 $result = $this->model->createUser($formData['login'], $formData['email'], $formData['password']);
                 if ($result) {
                     $this->setFlash('success', 'Вы успешно зарегистрировались!');
@@ -56,6 +61,7 @@ class UserController extends Controller
     {
         if (!empty($_POST)) {
             $formData = array_map('htmlspecialchars', $_POST);
+            $formData = array_map('trim', $formData);
             $user = $this->model->getUser($formData['login'], $formData['password']);
 
             if ($user) {
