@@ -93,7 +93,9 @@ class Controller
         header('HTTP/1.1 404 Not Found');
         header('Status: 404 Not Found');
 
-        $this->render('page404');
+        $this->render('page404', [
+            'page_title' => 'Страница не существует'
+        ]);
     }
 
     /**
