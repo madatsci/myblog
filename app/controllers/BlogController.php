@@ -90,6 +90,10 @@ class BlogController extends Controller
             $this->page404();
         } else {
             $post = array_shift($post);
+
+            // в базе, к сожалению, хранится только текст без разметки на абзацы
+            $postTextParts = explode(PHP_EOL, $post['full_text']);
+            $post['full_text'] = '<p>' . implode('</p><p>', $postTextParts) . '</p>';
         }
 
         $editLinksTpl = '';
